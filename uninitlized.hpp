@@ -58,7 +58,7 @@ namespace MySTL
 		memmove(result, first, end - first);
 		return result + (end - first);
 	}
-	
+	//从first开始n个元素填充成x值
 	template <typename InputIterator, typename T>
 		void __uninitlize_fill_aux(InputIterator first, InputIterator end,
 				const T& value, __true_type){
@@ -77,7 +77,18 @@ namespace MySTL
 			}
 		}
 
-
+	template <typename InputIterator, typename T, typename U>
+		inline void __uninitlize_fill(InputIterator first, InputIterator end,
+				const T& value, U*){
+			typedef typename __type_traits<U>::is_POD_type is_POD;
+			__uninitlize_fill_aux(first, end, value, is_POD());
+		}
+	
+	template <class ForwordIterator, class T, class U>
+		inline void uninitlize_fill(ForwordIterator first, ForwordIterator end,
+				const T& x, U*){
+			__uninitlize_fill(first, end, x, value_type(first));
+		}
 
 
 } 

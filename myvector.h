@@ -3,12 +3,15 @@
 #include <iostream>
 #include <unistd.h>
 #include <stdlib.h>
+#include "myTrait.hpp"
+#include "myIterator.hpp"
+#include "myConstruct.hpp"
 
-
-namespace mystl{
+namespace MySTL{
 	template<class Type>
 		class MyVector{
 		public:
+			//定义vector自身的嵌套类别
 			typedef Type            value_type;
 			typedef value_type *    iterator;  
 			typedef value_type *    pointer;
