@@ -8,13 +8,11 @@ namespace MySTL
 	class __alloc_template
 	{
 		//以下函数都是在内存不足的时候进行调用的
-	private:
+		private:
 		static void *oom_malloc(size_t);  //分配不足
 		static void *oom_realloc(void *, size_t); //重新分配不足
-#ifndef __STL_STATIC_TEMPLATE_MEMBER_BUG
 		//内存不足设置的处理历程，默认设置为0，表示没有设置处理例程。
 		static void (* __malloc_alloc_oom_handler)(); 
-#endif
 	public:
 		static void (* set_malloc_handler(void (*f)()))(){
 			void (* old)() = __malloc_alloc_oom_handler;
@@ -86,7 +84,7 @@ namespace MySTL
 		{
 		public:
 			static T* allocate(size_t n){
-				return 0 == n ? : (T*)Alloc::allocate(n * sizeof(T));
+				return 0 == n ? 0 : (T*)Alloc::allocate(n * sizeof(T));
 			}
 			static T *allocate(void){
 				return (T*)Alloc::allocate(sizeof(T));

@@ -11,7 +11,7 @@ namespace MySTL{
 	void* __alloc_template::oom_malloc(size_t n){
 		void (*my_alloc_handler)();
 		void *res;
-		for(;;){
+		while(1){
 			my_alloc_handler = __malloc_alloc_oom_handler;
 			if(0 == my_alloc_handler){
 				__THROW_BAD_ALLOC;

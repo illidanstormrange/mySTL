@@ -29,15 +29,15 @@ namespace MySTL{
 
 	template <typename Iterator, typename T>
 		inline void __destroy(Iterator first, Iterator end, T*){
-			typedef typename __type_traits<T>::has_trivial_destuctor trivial_destructor;
+			typedef typename __true_traits<T>::has_trivial_destructor trivial_destructor;
 			__destroy_aux(first, end, trivial_destructor());
 		}
 	template<typename Iterator>
 		inline void destroy(Iterator first, Iterator end){
 			__destroy(first, end, value_type(first));
 		}
-	inline void destroy(char*, char*) {}
-	inline void destroy(wchar_t*, wchar_t*) {}
+	//inline void destroy(char*, char*) {}
+	//inline void destroy(wchar_t*, wchar_t*) {}
 	
 }
 

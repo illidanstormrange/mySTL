@@ -35,7 +35,7 @@ namespace MySTL
 		inline ForwordIterator __uninitlize_copy(InputIterator first,
 				InputIterator end, ForwordIterator result, T*)
 		{
-			typedef typename __type_traits<T>::is_POD_type is_POD;
+			typedef typename __true_traits<T>::is_POD_type is_POD;
 			return __uninitlize_copy_aux(first, end, result, is_POD());
 		}
 
@@ -80,15 +80,48 @@ namespace MySTL
 	template <typename InputIterator, typename T, typename U>
 		inline void __uninitlize_fill(InputIterator first, InputIterator end,
 				const T& value, U*){
-			typedef typename __type_traits<U>::is_POD_type is_POD;
+			typedef typename __true_traits<U>::is_POD_type is_POD;
 			__uninitlize_fill_aux(first, end, value, is_POD());
 		}
-	
-	template <class ForwordIterator, class T, class U>
-		inline void uninitlize_fill(ForwordIterator first, ForwordIterator end,
-				const T& x, U*){
-			__uninitlize_fill(first, end, x, value_type(first));
+	template <typename InputIterator, typename T>
+		void uninitlize_fill(InputIterator first, InputIterator end, const T& value){
+			__uninitlize_fill(first, end, value, value_type(first));
+		}
+	template<typename InputIterator, typename Size, typename T>
+		InputIterator __uninitlize_fill_n_aux(InputIterator first, Size n, const T& value,
+				__true_type){
+			InputIterator cur = first;
+			while(n > 0){
+				*cur = value;
+				++cur;
+				--n;
+			}
+			return cur;
+		}	
+	template<typename InputIterator, typename Size, typename T>
+		InputIterator __uninitlize_fill_n_aux(InputIterator first, Size n, const T& value,
+				__false_type){
+			InputIterator cur = first;
+			while(n > 0){
+				construct(&*cur, value);
+				++cur;
+				--n;
+			}
+			return cur;
 		}
 
+	template<typename InputIterator, typename Size, typename T, typename U>
+		InputIterator __uninitlize_fill_n(InputIterator first, Size n, const T& value, U*){
+			typedef typename __true_traits<U>::is_POD_type is_POD;
+			return __uninitlize_fill_n_aux(first, n, value, is_POD());
+		}
 
+	template <class InputIterator, class Size, class T>
+		inline InputIterator uninitlize_fill_n(InputIterator first, Size end,
+				const T& x){
+			return __uninitlize_fill_n(first, end, x, value_type(first));
+		}
+
+	
 } 
+
