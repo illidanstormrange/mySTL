@@ -1,57 +1,58 @@
+#pragma once
 #ifndef __MYALLOC_HPP
 #define __MYALLOC_HPP
 #include <stdlib.h>
 
 namespace MySTL
 {
-	//ä¸€çº§é…ç½®å™¨
+	//Ò»¼¶ÅäÖÃÆ÷
 	class __alloc_template
 	{
-		//ä»¥ä¸‹å‡½æ•°éƒ½æ˜¯åœ¨å†…å­˜ä¸è¶³çš„æ—¶å€™è¿›è¡Œè°ƒç”¨çš„
-		private:
-		static void *oom_malloc(size_t);  //åˆ†é…ä¸è¶³
-		static void *oom_realloc(void *, size_t); //é‡æ–°åˆ†é…ä¸è¶³
-		//å†…å­˜ä¸è¶³è®¾ç½®çš„å¤„ç†å†ç¨‹ï¼Œé»˜è®¤è®¾ç½®ä¸º0ï¼Œè¡¨ç¤ºæ²¡æœ‰è®¾ç½®å¤„ç†ä¾‹ç¨‹ã€‚
-		static void (* __malloc_alloc_oom_handler)(); 
+		//ÒÔÏÂº¯Êı¶¼ÊÇÔÚÄÚ´æ²»×ãµÄÊ±ºò½øĞĞµ÷ÓÃµÄ
+	private:
+		static void *oom_malloc(size_t);  //·ÖÅä²»×ã
+		static void *oom_realloc(void *, size_t); //ÖØĞÂ·ÖÅä²»×ã
+		//ÄÚ´æ²»×ãÉèÖÃµÄ´¦ÀíÀú³Ì£¬Ä¬ÈÏÉèÖÃÎª0£¬±íÊ¾Ã»ÓĞÉèÖÃ´¦ÀíÀı³Ì¡£
+		static void(*__malloc_alloc_oom_handler)();
 	public:
-		static void (* set_malloc_handler(void (*f)()))(){
-			void (* old)() = __malloc_alloc_oom_handler;
+		static void(*set_malloc_handler(void(*f)()))(){
+			void(*old)() = __malloc_alloc_oom_handler;
 			__malloc_alloc_oom_handler = f;
 			return (old);
 		}
-		static void * allocate(size_t n){
+		static void * allocate(size_t n) {
 			void *result = malloc(n);
 			if (0 == result) result = oom_malloc(n);
 			return result;
 		}
-		static void deallocate(void *p, size_t){
+		static void deallocate(void *p, size_t) {
 			free(p);
 		}
-		static void * reallocate(void *p, size_t sz, size_t new_sz){
+		static void * reallocate(void *p, size_t sz, size_t new_sz) {
 			void *result = realloc(p, new_sz);
-			if(0 == result) result = oom_realloc(p, new_sz);
+			if (0 == result) result = oom_realloc(p, new_sz);
 			return result;
 		}
 
-		static void free_all();
+		//static void free_all();
 
 	};
 
-	// é»˜è®¤å°†malloc_allocè®¾ç½®ä¸º0
+	// Ä¬ÈÏ½«malloc_allocÉèÖÃÎª0
 	typedef __alloc_template malloc_alloc;
-	
-	enum {__ALIGN = 8}; //è®¾ç½®å¯¹é½è¦æ±‚ï¼Œå¯¹å…¶ä¸º8å­—èŠ‚ï¼Œæ²¡æœ‰8å­—èŠ‚è‡ªåŠ¨è¡¥é½
-	enum {__MAX_BYTES = 128}; //ç¬¬äºŒå­£é…ç½®å™¨çš„æœ€å¤§ä¸€æ¬¡æ€§ç”³è¯·å¤§å°ï¼Œå¤§äº128å°±è°ƒç”¨ä¸€çº§
-	enum {__NFREELISTS = __MAX_BYTES / __ALIGN};//é“¾è¡¨ä¸ªæ•°ï¼Œåˆ†åˆ«ä»£è¡¨8ï¼Œ 16ï¼Œ 32...å­—èŠ‚çš„é“¾è¡¨
-	
-	
+
+	enum { __ALIGN = 8 }; //ÉèÖÃ¶ÔÆëÒªÇó£¬¶ÔÆäÎª8×Ö½Ú£¬Ã»ÓĞ8×Ö½Ú×Ô¶¯²¹Æë
+	enum { __MAX_BYTES = 128 }; //µÚ¶ş¼¾ÅäÖÃÆ÷µÄ×î´óÒ»´ÎĞÔÉêÇë´óĞ¡£¬´óÓÚ128¾Íµ÷ÓÃÒ»¼¶
+	enum { __NFREELISTS = __MAX_BYTES / __ALIGN };//Á´±í¸öÊı£¬·Ö±ğ´ú±í8£¬ 16£¬ 32...×Ö½ÚµÄÁ´±í
+
+
 
 
 
 	class alloc
 	{
 	private:
-		union obj{
+		union obj {
 			union obj *free_list_link;
 			char data[1];
 		};
@@ -61,12 +62,12 @@ namespace MySTL
 		static char *end_free;
 		static size_t heap_size;
 	private:
-		static size_t ROUND_UP(size_t bytes){
-			return ((bytes + __ALIGN - 1) * ~(__ALIGN - 1));
+		static size_t ROUND_UP(size_t bytes) {
+			return ((bytes + __ALIGN - 1) & ~(__ALIGN - 1));
 		}
-		//è¿›è¡Œå¯¹é½æ“ä½œï¼Œå°†ä¸æ»¡8çš„è¢«æ ‘å¡«å……æˆ8çš„å€æ•°
-		static size_t FREELIST_INDEX(size_t bytes){
-			return (((bytes) + __ALIGN - 1) / __ALIGN - 1);
+		//½øĞĞ¶ÔÆë²Ù×÷£¬½«²»Âú8µÄ±»Ê÷Ìî³ä³É8µÄ±¶Êı
+		static size_t FREELIST_INDEX(size_t bytes) {
+			return (((bytes)+__ALIGN - 1) / __ALIGN - 1);
 		}
 
 		static void *refill(size_t);
@@ -75,29 +76,29 @@ namespace MySTL
 		static void *allocate(size_t);
 		static void deallocate(void *, size_t);
 		static void *reallocate(void *p, size_t, size_t);
-	
-	};	
 
-	//å®šä¹‰ç¬¦åˆSTLè§„æ ¼çš„é…ç½®å™¨æ¥å£ï¼Œä¸ç®¡æ˜¯ä¸€çº§è¿˜æ˜¯äºŒçº§é…ç½®å™¨éƒ½ä½¿ç”¨è¿™ä¸ªæ¥å£è¿›è¡Œåˆ†é…
-	template<class T, class Alloc>
-		class simple_alloc
-		{
-		public:
-			static T* allocate(size_t n){
-				return 0 == n ? 0 : (T*)Alloc::allocate(n * sizeof(T));
-			}
-			static T *allocate(void){
-				return (T*)Alloc::allocate(sizeof(T));
-			}
-			static void deallocate(T *p, size_t n){
-				if(0 != n)
-					Alloc::deallocate(p, n * sizeof(T));
-			}
-			static void deallocate(T *p){
-				Alloc::deallocate(p, sizeof(T));
-			}
-			
-		};
+	};
+
+	//¶¨Òå·ûºÏSTL¹æ¸ñµÄÅäÖÃÆ÷½Ó¿Ú£¬²»¹ÜÊÇÒ»¼¶»¹ÊÇ¶ş¼¶ÅäÖÃÆ÷¶¼Ê¹ÓÃÕâ¸ö½Ó¿Ú½øĞĞ·ÖÅä
+	template<typename T, typename Alloc>
+	class simple_alloc
+	{
+	public:
+		static T* allocate(size_t n) {
+			return 0 == n ? 0 : (T*)Alloc::allocate(n * sizeof(T));
+		}
+		static T *allocate(void) {
+			return (T*)Alloc::allocate(sizeof(T));
+		}
+		static void deallocate(T *p, size_t n) {
+			if (0 != n)
+				Alloc::deallocate(p, n * sizeof(T));
+		}
+		static void deallocate(T *p) {
+			Alloc::deallocate(p, sizeof(T));
+		}
+
+	};
 
 }
 

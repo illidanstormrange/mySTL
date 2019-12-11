@@ -1,3 +1,4 @@
+#pragma once
 #ifndef _Iterator_hpp
 #define _Iterator_hpp
 #include <stddef.h>
@@ -6,25 +7,25 @@ namespace MySTL
 {
 	struct input_iterator_tag {};
 	struct output_iterator_tag {};
-	struct forword_iterator_tag : public input_iterator_tag{};
-	struct bidirectional_iterator_tag :  public forword_iterator_tag {};
+	struct forword_iterator_tag : public input_iterator_tag {};
+	struct bidirectional_iterator_tag : public forword_iterator_tag {};
 	struct random_access_iterator_tag : public bidirectional_iterator_tag {};
-	/*å®šä¹‰çš„ç©ºç±»æ˜¯ä¸ºäº†åœ¨è°ƒç”¨æ—¶ï¼Œé€‰æ‹©ä¸åŒçš„é‡è½½å‡½æ•°
-	 *input_iterator_tag æ˜¯è¾“å…¥è¿­ä»£å™¨ï¼šè¿­ä»£å™¨è¾“å…¥çš„å†…å®¹ä¸èƒ½æ›´æ”¹ï¼Œåªè¯»ä¸”åªèƒ½æ“ä½œä¸€æ¬¡
-	 *output_iterator_tag æ˜¯è¾“å‡ºè¿­ä»£å™¨ï¼šåªå†™ä¸”åªèƒ½æ“ä½œä¸€æ¬¡
-	 *forword_iterator_tag æ˜¯æ­£å‘è¿­ä»£å™¨ï¼šæ”¯æŒè¯»å†™æ“ä½œä¸”å¯ä»¥å¤šæ¬¡æ“ä½œ
-	 *bidirectional_iterator_tag æ˜¯åŒå‘è¿­ä»£å™¨ï¼š æ”¯æŒåŒå‘çš„æ“ä½œï¼Œä¸”å¯ä»¥å¤šæ¬¡è¯»å†™
-	 *random_access_iterator_tag æ˜¯éšå³è®¿é—®è¿­ä»£å™¨ï¼šæ”¯æŒåŒå‘ç§»åŠ¨ï¼Œä¸”å¯ä»¥å¤šæ¬¡è¯»å†™ã€‚p+n,p-nç­‰
+	/*¶¨ÒåµÄ¿ÕÀàÊÇÎªÁËÔÚµ÷ÓÃÊ±£¬Ñ¡Ôñ²»Í¬µÄÖØÔØº¯Êı
+	 *input_iterator_tag ÊÇÊäÈëµü´úÆ÷£ºµü´úÆ÷ÊäÈëµÄÄÚÈİ²»ÄÜ¸ü¸Ä£¬Ö»¶ÁÇÒÖ»ÄÜ²Ù×÷Ò»´Î
+	 *output_iterator_tag ÊÇÊä³öµü´úÆ÷£ºÖ»Ğ´ÇÒÖ»ÄÜ²Ù×÷Ò»´Î
+	 *forword_iterator_tag ÊÇÕıÏòµü´úÆ÷£ºÖ§³Ö¶ÁĞ´²Ù×÷ÇÒ¿ÉÒÔ¶à´Î²Ù×÷
+	 *bidirectional_iterator_tag ÊÇË«Ïòµü´úÆ÷£º Ö§³ÖË«ÏòµÄ²Ù×÷£¬ÇÒ¿ÉÒÔ¶à´Î¶ÁĞ´
+	 *random_access_iterator_tag ÊÇËæ¼´·ÃÎÊµü´úÆ÷£ºÖ§³ÖË«ÏòÒÆ¶¯£¬ÇÒ¿ÉÒÔ¶à´Î¶ÁĞ´¡£p+n,p-nµÈ
 	 */
 
-	template <class T,class Distence>
-		struct input_iterator{
-			typedef input_iterator_tag iterator_category;
-			typedef T                  value_type;
-			typedef Distence           difference_type;
-			typedef T*                 pointer;
-			typedef T&                 reference;
-		};
+	template <class T, class Distence>
+	struct input_iterator {
+		typedef input_iterator_tag iterator_category;
+		typedef T                  value_type;
+		typedef Distence           difference_type;
+		typedef T*                 pointer;
+		typedef T&                 reference;
+	};
 
 	struct output_iterator
 	{
@@ -35,112 +36,112 @@ namespace MySTL
 		typedef void                reference;
 	};
 
-	template <class T,class Distence>
-		struct forword_iterator{
-			typedef forword_iterator_tag iterator_category;
-			typedef T                  value_type;
-			typedef Distence           difference_type;
-			typedef T*                 pointer;
-			typedef T&                 reference;
-		};
-	template <class T,class Distence>
-		struct bidirectional_iterator{
-			typedef bidirectional_iterator_tag iterator_category;
-			typedef T                  value_type;
-			typedef Distence           difference_type;
-			typedef T*                 pointer;
-			typedef T&                 reference;
-		};
-	template <class T,class Distence>
-		struct random_access_iterator{
-			typedef random_access_iterator_tag iterator_category;
-			typedef T                  value_type;
-			typedef Distence           difference_type;
-			typedef T*                 pointer;
-			typedef T&                 reference;
-		};
+	template <class T, class Distence>
+	struct forword_iterator {
+		typedef forword_iterator_tag iterator_category;
+		typedef T                  value_type;
+		typedef Distence           difference_type;
+		typedef T*                 pointer;
+		typedef T&                 reference;
+	};
+	template <class T, class Distence>
+	struct bidirectional_iterator {
+		typedef bidirectional_iterator_tag iterator_category;
+		typedef T                  value_type;
+		typedef Distence           difference_type;
+		typedef T*                 pointer;
+		typedef T&                 reference;
+	};
+	template <class T, class Distence>
+	struct random_access_iterator {
+		typedef random_access_iterator_tag iterator_category;
+		typedef T                  value_type;
+		typedef Distence           difference_type;
+		typedef T*                 pointer;
+		typedef T&                 reference;
+	};
 
 
 	template <class InputIterator, class Distence>
-		inline void __distence(InputIterator first, InputIterator end, Distence &n, input_iterator_tag)
-		{
-			while(first != end){
-				++first, ++n;
-			}
+	inline void __distence(InputIterator first, InputIterator end, Distence &n, input_iterator_tag)
+	{
+		while (first != end) {
+			++first, ++n;
 		}
+	}
 
 
 	template <class RandomAccessIterator, class Distence>
-		inline void __distence(RandomAccessIterator first, RandomAccessIterator end, Distence &n,
-				random_access_iterator_tag)
-		{
-			n += end - first;
-		}
+	inline void __distence(RandomAccessIterator first, RandomAccessIterator end, Distence &n,
+		random_access_iterator_tag)
+	{
+		n += end - first;
+	}
 
 
 	template <class InputIterator, class Distence>
-		inline void distence(InputIterator first, InputIterator end, Distence &n)
-		{
-			__distence(first, end, n, iterator_category(first));
-		}
-	//iterator_traitså°±æ˜¯ ä½¿ç”¨typenameå¯¹å‚æ•°ç±»å‹çš„æå–ï¼Œå¹¶å¯¹å‚æ•°ç±»å‹åœ¨è¿›è¡Œä¸€æ¬¡å‘½å
+	inline void distence(InputIterator first, InputIterator end, Distence &n)
+	{
+		__distence(first, end, n, iterator_category(first));
+	}
+	//iterator_traits¾ÍÊÇ Ê¹ÓÃtypename¶Ô²ÎÊıÀàĞÍµÄÌáÈ¡£¬²¢¶Ô²ÎÊıÀàĞÍÔÚ½øĞĞÒ»´ÎÃüÃû
 	template <class Iterator>
-		struct iterator_traits {
-			typedef typename Iterator::iterator_category iterator_category;
-			typedef typename Iterator::value_type        value_type;
-			typedef typename Iterator::difference_type   difference_type;
-			typedef typename Iterator::pointer           pointer;
-			typedef typename Iterator::reference         reference;
-		};
-	//é’ˆå¯¹åŸç”ŸæŒ‡é’ˆT* ç”Ÿæˆçš„ traits åç‰¹åŒ–
+	struct iterator_traits {
+		typedef typename Iterator::iterator_category iterator_category;
+		typedef typename Iterator::value_type        value_type;
+		typedef typename Iterator::difference_type   difference_type;
+		typedef typename Iterator::pointer           pointer;
+		typedef typename Iterator::reference         reference;
+	};
+	//Õë¶ÔÔ­ÉúÖ¸ÕëT* Éú³ÉµÄ traits Æ«ÌØ»¯
 	template <class T>
-		struct iterator_traits<T* >
-		{
-			typedef random_access_iterator_tag iterator_category;
-			typedef T						   value_type;
-			typedef ptrdiff_t				   difference_type;
-			typedef T *						   pointer;
-			typedef T&						   reference;
-		};
-	//é’ˆå¯¹åŸç”ŸæŒ‡é’ˆconst T*ç”Ÿæˆçš„traitsåç‰¹åŒ–
+	struct iterator_traits<T* >
+	{
+		typedef random_access_iterator_tag iterator_category;
+		typedef T						   value_type;
+		typedef ptrdiff_t				   difference_type;
+		typedef T *						   pointer;
+		typedef T&						   reference;
+	};
+	//Õë¶ÔÔ­ÉúÖ¸Õëconst T*Éú³ÉµÄtraitsÆ«ÌØ»¯
 	template <class T>
-		struct iterator_traits<const T* >
-		{
-			typedef random_access_iterator_tag iterator_category;
-			typedef T						   value_type;
-			typedef ptrdiff_t				   difference_type;
-			typedef T *						   pointer;
-			typedef T&						   reference;
-		};	
-	//é€šè¿‡iterator_traitsèƒå–çš„ç±»å‹çš„iterator_categoryç¡®å®šè¿­ä»£å™¨çš„ç±»å‹ã€‚
+	struct iterator_traits<const T* >
+	{
+		typedef random_access_iterator_tag iterator_category;
+		typedef T						   value_type;
+		typedef ptrdiff_t				   difference_type;
+		typedef T *						   pointer;
+		typedef T&						   reference;
+	};
+	//Í¨¹ıiterator_traitsİÍÈ¡µÄÀàĞÍµÄiterator_categoryÈ·¶¨µü´úÆ÷µÄÀàĞÍ¡£
 	template <class Iterator>
-		inline typename iterator_traits<Iterator>::iterator_category
-		iterator_category(const Iterator&){
-			typedef typename iterator_traits<Iterator>::iterator_category category;
-			return category();
-		}
+	inline typename iterator_traits<Iterator>::iterator_category
+		iterator_category(const Iterator&) {
+		typedef typename iterator_traits<Iterator>::iterator_category category;
+		return category();
+	}
 	template <class Iterator>
-		inline typename iterator_traits<Iterator>::difference_type*
-		difference_type(const Iterator&){
-			return static_cast<typename iterator_traits<Iterator>::difference_type*>(0);
-		}
+	inline typename iterator_traits<Iterator>::difference_type*
+		difference_type(const Iterator&) {
+		return static_cast<typename iterator_traits<Iterator>::difference_type*>(0);
+	}
 	template <class Iterator>
-		inline typename iterator_traits<Iterator>::value_type*
-		value_type(const Iterator&){
-			return static_cast<typename iterator_traits<Iterator>::value_type*>(0);
-		}
+	inline typename iterator_traits<Iterator>::value_type*
+		value_type(const Iterator&) {
+		return static_cast<typename iterator_traits<Iterator>::value_type*>(0);
+	}
 	template <typename Iterator>
-		typename iterator_traits<Iterator>::difference_type
+	typename iterator_traits<Iterator>::difference_type
 		__distence(Iterator first, Iterator end, struct input_iterator_tag)
-		{
-			typename iterator_traits<Iterator>::difference_type n = 0;
-			while(first != end){
-				++first, ++n;
-			}
-			return n;
+	{
+		typename iterator_traits<Iterator>::difference_type n = 0;
+		while (first != end) {
+			++first, ++n;
 		}
+		return n;
+	}
 
-	//trait ç¼–ç¨‹ä½¿ç”¨typenameå’Œç‰¹åã€åç‰¹åŒ–å°†è¿­ä»£å™¨æ²¡èƒ½æ”¯æŒåŸç”ŸæŒ‡é’ˆï¼Œä¸èƒ½æ¨å¯¼å‡ºå‡½æ•°è¿”å›å€¼çš„é—®å®Œå–„äº†
+	//trait ±à³ÌÊ¹ÓÃtypenameºÍÌØ»ª¡¢Æ«ÌØ»¯½«µü´úÆ÷Ã»ÄÜÖ§³ÖÔ­ÉúÖ¸Õë£¬²»ÄÜÍÆµ¼³öº¯Êı·µ»ØÖµµÄÎÊÍêÉÆÁË
 
-
+}
 #endif
