@@ -35,12 +35,7 @@ namespace MySTL {
 			last = start + n;
 			end_of_vec = last;
 		}
-		void deallocator() {
-			if (start) {
-				date_allocator::deallocate(start, end_of_vec - start);
-			}
-		}
-
+		void insert_aux(iterator position, const T& value);
 		//void insert_aux(iterator position, const T& value);
 	protected:
 		//ÉèÖÃ¿Õ¼äÊÊÅäÆ÷
@@ -67,11 +62,11 @@ namespace MySTL {
 		reference back() { return *(end() - 1); }
 		reference at(size_type n) { return *(begin() + n); }
 		//modify
-	//	void push_back(const T& val);
-	//	void pop_back();
+		void push_back(const T& val);
+		void pop_back();
 		//insert
-	//	iterator insert (iterator position, const T& val);
-	//	iterator insert (iterator position, size_type n, const T& val);
+//		iterator insert (iterator position, const T& val);
+//		iterator insert (iterator position, size_type n, const T& val);
 		//erase
 		iterator erase(iterator position) {
 			if (position != end()) {
@@ -88,6 +83,8 @@ namespace MySTL {
 			this->last = end() - (last - first);
 			return first;
 		}
+
+		
 		void clear() {
 			destroy(begin(), end());
 			start = 0;
@@ -97,6 +94,29 @@ namespace MySTL {
 		void deallocate() {
 			if (start) {
 				date_allocator::deallocate(start, end_of_vec - start);
+			}
+		}
+		void swap(myVector &x){
+			iterator tem_start = start;
+			iterator tem_finish = last;
+			iterator temp_end_of_vec = end_of_vec;
+
+			start = x.begin();
+			last = x.end();
+			end_of_vec = x.end_of_vec;
+
+			x.start = tem_start;
+			x.last = tem_finish;
+			x.end_of_vec = temp_end_of_vec;
+		}
+		
+
+		void resize(size_type n, const T* val){
+			if(n < size()){
+				erase(begin() + n, end());
+			}
+			else{
+				insert(end(), n - size(), val);
 			}
 		}
 	public:

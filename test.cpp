@@ -1,5 +1,6 @@
 #include <iostream>
 #include "myvector.hpp"
+#include "myvector_impl.h"
 using namespace MySTL;
 int main()
 {
@@ -9,6 +10,8 @@ int main()
 	for (int i = 0; i < 10; i++) {
 		std::cout << a[i] << " ";
 	}
+	b.push_back(1);
+	std::cout << "b[0] = " << b[0] << std::endl;
 	std::cout << std::endl;
 	return 0;
 	system("pause");

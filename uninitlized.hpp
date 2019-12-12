@@ -41,7 +41,7 @@ namespace MySTL
 	template <class inputIterator, class ForwordIterator>
 	inline ForwordIterator uninitlize_copy(inputIterator first,
 		inputIterator end, ForwordIterator result) {
-		return __uninitlize_copy(first, end, value_type(result));
+		return __uninitlize_copy(first, end, result, value_type(result));
 	}
 
 	inline char* uninitlize_copy(const char* first, const char* end, char* result)
