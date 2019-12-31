@@ -7,9 +7,12 @@ namespace MySTL
 	template <typename T>
 		void myVector<T>::insert_aux(iterator position, const T& value){
 			if(last != end_of_vec){
+				std::cout << "2" << std::endl;
 				construct(last, *(last - 1));
 				++last;
+				std::cout << "3" << std::endl;
 				copy_backward(position, last - 2, last - 1);
+				std::cout << "4" << std::endl;
 				*position = value;
 			}
 			else{

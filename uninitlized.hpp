@@ -23,7 +23,10 @@ namespace MySTL
 	inline ForwordIterator __uninitlize_copy_aux(InputIterator first,
 		InputIterator end, ForwordIterator result, __false_type) {
 		while (first != end) {
+			std::cout << "first = " << *first << std::endl;
+			std::cout << "result = " << &*result << std::endl;
 			construct(&*result, *first);
+			
 			++first;
 			++result;
 		}
